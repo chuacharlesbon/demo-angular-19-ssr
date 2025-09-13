@@ -1,0 +1,9 @@
+{
+    "HELLO": "こんいちは",
+    "WELCOME_USER": "こんいちは, {{name}}ーさん",
+    "LOGIN": "ログイン",
+    "FORGOT_PASSWORD": "パスワードをお忘れですか？",
+    "EMAIL": "メール",
+    "PASSWORD": "パスワード",
+    "LANGUAGE": "English"
+}

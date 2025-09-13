@@ -227,6 +227,10 @@
       </svg>
       <h1>Hello, {{ title }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
+      <button (click)="changeLanguage" >
+        <img [src]="'assets/logo/' + currentLang + '_icon.png'" [alt]="currentLang + ' icon'" height="50px" width="50px" />
+        {{ 'LANGUAGE' | translate }}
+      </button>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">

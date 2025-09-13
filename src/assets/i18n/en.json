@@ -1,0 +1,9 @@
+{
+    "HELLO": "Hello",
+    "WELCOME_USER": "Welcome, {{name}}",
+    "LOGIN": "LOGIN",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "LANGUAGE": "日本語"
+}
