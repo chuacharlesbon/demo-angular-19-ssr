@@ -1,10 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "dist/angular-19-app/server/server.mjs", "use": "@vercel/node" },
-    { "src": "dist/angular-19-app/browser/**", "use": "@vercel/static" }
+    { "src": "dist/angular-19-app/server/server.mjs", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "dist/angular-19-app/server/server.mjs" }
-  ]
+    { "src": "/.*", "dest": "dist/angular-19-app/server/server.mjs" }
+  ],
+  "outputDirectory": "dist/angular-19-app/browser"
 }
