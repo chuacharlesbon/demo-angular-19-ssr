@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "npm run build:ssr",
-  "outputDirectory": "dist/angular-19-app/browser",
+  "builds": [
+    { "src": "dist/angular-19-app/server/server.mjs", "use": "@vercel/node" },
+    { "src": "dist/angular-19-app/browser/**", "use": "@vercel/static" }
+  ],
   "routes": [
-    { "src": "/(.*)", "dest": "dist/angular-19-app/server/server.mjs" }
+    { "src": "/.*", "dest": "dist/angular-19-app/server/server.mjs" }
   ]
 }

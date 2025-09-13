@@ -10,14 +10,6 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/angular-19-app/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
-          }
-        },
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {

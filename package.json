@@ -7,8 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular-19-app": "node dist/angular-19-app/server/server.mjs",
-    "build:ssr": "ng build && ng run angular-19-app:server"
+    "serve:ssr:angular-19-app": "node dist/angular-19-app/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -22,9 +21,7 @@
     "@angular/router": "^19.2.0",
     "@angular/ssr": "^19.2.16",
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
-    "@nguniversal/express-engine": "^7.0.2",
     "@popperjs/core": "^2.11.8",
-    "@vercel/node": "^5.3.22",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
