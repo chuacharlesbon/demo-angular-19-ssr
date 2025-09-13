@@ -2,11 +2,6 @@
   "version": 2,
   "buildCommand": "npm run build:ssr",
   "outputDirectory": "dist/angular-19-app/browser",
-  "functions": {
-    "api/index.js": {
-      "runtime": "@vercel/node"
-    }
-  },
   "routes": [
     { "src": "/(.*)", "dest": "dist/angular-19-app/server/server.mjs" }
   ]
