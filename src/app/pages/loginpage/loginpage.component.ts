@@ -19,13 +19,17 @@ export class LoginpageComponent {
   onLangChange: Subscription = new Subscription();
 
   ngOnInit(): void {
-    // Synchronous translation
-    const translatedTitle = this.translate.instant('LOGIN');
-    const translatedDesc = this.translate.instant('METADESC');
+    // Ensure language is set first
+    this.onLangChange = this.translate.use('ja').subscribe(() => {
+      this.translate.get(['LOGIN', 'METADESC']).subscribe(translations => {
+        const translatedTitle = translations['LOGIN'];
+        const translatedDesc = translations['METADESC'];
 
-    this.appTitle.setTitle(`${translatedTitle} - My Angular App`);
-    this.meta.updateTag({ name: 'description', content: `${translatedTitle} - ${translatedDesc}` });
-    this.meta.updateTag({ property: 'og:title', content: `${translatedTitle} - My Angular App` });
+        this.appTitle.setTitle(`${translatedTitle} - My Angular App`);
+        this.meta.updateTag({ name: 'description', content: `${translatedTitle} - ${translatedDesc}` });
+        this.meta.updateTag({ property: 'og:title', content: `${translatedTitle} - My Angular App` });
+      });
+    });
 
     // Get translation once
     this.textLogin = this.translate.instant('LOGIN');;
@@ -34,10 +38,10 @@ export class LoginpageComponent {
     // });
 
     // Subscribing to services to use translated texts as values on change
-    this.translate.onLangChange.subscribe(() => {
-      const title = this.translate.instant('LOGIN');
-      this.textLogin = title;
-    });
+    // this.translate.onLangChange.subscribe(() => {
+    //   const title = this.translate.instant('LOGIN');
+    //   this.textLogin = title;
+    // });
   }
 
   ngOnDestroy() {
