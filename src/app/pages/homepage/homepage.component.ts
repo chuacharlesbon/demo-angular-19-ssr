@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-homepage',
@@ -11,9 +12,16 @@ export class HomepageComponent {
   meta = inject(Meta);
   appTitle = inject(Title);
 
+  // Language
+  private translate = inject(TranslateService);
+
   ngOnInit(): void {
-    this.appTitle.setTitle('HOME - My Angular App');
-    this.meta.updateTag({ name: 'description', content: 'HOME Page - Learn more about us on this page.' });
-    this.meta.updateTag({ property: 'og:title', content: 'HOME- My Angular App' });
+    // Synchronous translation
+    const translatedTitle = this.translate.instant('METAHOME');
+    const translatedDesc = this.translate.instant('METADESC');
+
+    this.appTitle.setTitle(`${translatedTitle} - My Angular App`);
+    this.meta.updateTag({ name: 'description', content: `${translatedTitle} - ${translatedDesc}` });
+    this.meta.updateTag({ property: 'og:title', content: `${translatedTitle} - My Angular App` });
   }
 }

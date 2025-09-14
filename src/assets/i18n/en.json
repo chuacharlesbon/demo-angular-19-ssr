@@ -5,5 +5,7 @@
     "FORGOT_PASSWORD": "Forgot password?",
     "EMAIL": "Email",
     "PASSWORD": "Password",
-    "LANGUAGE": "日本語"
+    "LANGUAGE": "日本語",
+    "METAHOME": "HOME",
+    "METADESC": "Learn more about us"
 }
