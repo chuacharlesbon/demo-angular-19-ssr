@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { SocketService } from '../../services/socket/socket.service';
 
 @Component({
   selector: 'app-loginpage',
@@ -13,6 +14,10 @@ export class LoginpageComponent {
   meta = inject(Meta);
   appTitle = inject(Title);
   textLogin = '';
+
+  // Socket
+  private socketService = inject(SocketService);
+  private socketSub: Subscription = new Subscription();
 
   // Language
   private translate = inject(TranslateService);
@@ -42,9 +47,16 @@ export class LoginpageComponent {
     //   const title = this.translate.instant('LOGIN');
     //   this.textLogin = title;
     // });
+
+    // Subscribe to socket messages from server
+    this.socketSub = this.socketService.listen<string>('message').subscribe(msg => {
+      // handle message
+      console.log('This is the message',msg);
+    });
   }
 
   ngOnDestroy() {
-    this.onLangChange.unsubscribe(); // Prevent memory leaks
+    this.onLangChange.unsubscribe(); // Prevent memory 
+    this.socketSub.unsubscribe();
   }
 }
