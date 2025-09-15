@@ -1,3 +1,15 @@
-<p>loginpage works!</p>
-<p>Direct translate: {{ 'LOGIN' | translate }}</p>
-<p>Variable: {{ textLogin }}</p>
+<div class="row align-items-center justify-content-center m-0" style="height: 100dvh;">
+    <form #form="ngForm" class="col-12 col-md-6 col-lg-4 col-xl-3 p-4" (ngSubmit)="onSubmit()">
+        <input autocomplete type="email" name="email" class="form-control my-1" [placeholder]="'EMAIL' | translate" [(ngModel)]="email"
+            required #emailCtrl="ngModel" />
+        <input autocomplete type="password" name="password" class="form-control my-1" [placeholder]="'PASSWORD' | translate"
+            [(ngModel)]="password" required #passwordCtrl="ngModel" />
+        <button *ngIf="!loading" class="btn btn-info fw-bold w-100 text-white" type="submit">
+            {{ 'LOGIN' | translate }}
+        </button>
+        <i *ngIf="loading" class="d-block my-4 animate-spin fa-solid fa-spinner text-center text-info"></i>
+        <a class="d-block my-2 text-decoration-none text-info text-center" [routerLink]="forgotPasswordLink">
+            {{ 'FORGOT_PASSWORD' | translate }}
+        </a>
+    </form>
+</div>

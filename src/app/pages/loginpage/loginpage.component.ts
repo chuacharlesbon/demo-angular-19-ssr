@@ -2,18 +2,32 @@ import { Component, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SocketService } from '../../services/socket/socket.service';
+import { UserService } from '../../services/user/user.service';
+import { ProfileStore } from '../../stores/profileStore';
+import { Router, RouterModule } from '@angular/router';
+import { routeNames } from '../../app.routes';
 
 @Component({
   selector: 'app-loginpage',
-  imports: [TranslateModule],
+  imports: [TranslateModule, FormsModule, RouterModule, CommonModule],
   templateUrl: './loginpage.component.html',
   styleUrl: './loginpage.component.css'
 })
 export class LoginpageComponent {
   meta = inject(Meta);
   appTitle = inject(Title);
+  router = inject(Router);
+  userServices = inject(UserService);
+  profileStore = inject(ProfileStore);
+
   textLogin = '';
+  loading = false;
+  email = "";
+  password = "";
+  forgotPasswordLink = '/'; // `/${routeNames.forgotPassword.path}`;
 
   // Socket
   private socketService = inject(SocketService);
@@ -58,5 +72,20 @@ export class LoginpageComponent {
   ngOnDestroy() {
     this.onLangChange.unsubscribe(); // Prevent memory 
     this.socketSub.unsubscribe();
+  }
+
+  async onSubmit() {
+    this.loading = true;
+    const result = await this.userServices.login(
+      this.email,
+      this.password
+    );
+
+    this.loading = false;
+
+    if (result.success) {
+      this.profileStore.setProfile(result?.data?.data);
+      this.router.navigate([routeNames.home.path]);
+    }
   }
 }
