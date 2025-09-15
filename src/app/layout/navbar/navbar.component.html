@@ -1,0 +1,57 @@
+<ng-template #drawer let-offcanvas>
+    <div class="offcanvas-header">
+        <div class="offcanvas-title">
+            <div class="w-25 p-4">LOGO</div>
+        </div>
+        <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss()"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="">
+            <button class="d-block btn btn-outline-light my-2 text-dark"
+                (click)="navigateAndClose(offcanvas, userLink)">Manage Users</button>
+            <button class="d-block btn btn-outline-light my-2 text-dark"
+                (click)="navigateAndClose(offcanvas, productLink)">Manage Products</button>
+        </div>
+    </div>
+</ng-template>
+<nav *ngIf="!isLoginPage"
+    class="bg-white sticky-top d-flex flex-row align-items-center justify-content-between shadow-sm py-2 px-2 px-md-3 px-lg-4 mx-0">
+    <button class="btn btn-outline-info" (click)="openDrawer()"><i class="fa-solid fa-bars"></i></button>
+    <div ngbDropdown>
+        <button type="button" class="btn btn-outline-info" id="dropdownAccountMenu" ngbDropdownToggle>
+            <span class="d-none d-md-inline me-4">{{ profileData.fullName ?? "Welcome" }}</span>
+            <i class="d-md-none fa-solid fa-user me-2"></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownAccountMenu">
+            <button ngbDropdownItem (click)="onAccount()">Account</button>
+            <button ngbDropdownItem (click)="onLogout()">Logout</button>
+            <hr />
+            <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('en')">
+                <img alt="use-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/en_icon.png" style="width: 30px; height: 30px;" />
+                English
+            </button>
+            <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('ja')">
+                <img alt="use-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/ja_icon.png" style="width: 30px; height: 30px;" />
+                日本語
+            </button>
+        </div>
+    </div>
+</nav>
+<nav *ngIf="isLoginPage"
+    class="bg-white sticky-top d-flex flex-row align-items-center justify-content-end shadow-sm py-2 px-2 px-md-3 px-lg-4 mx-0">
+    <div ngbDropdown>
+        <button type="button" class="btn btn-outline-info" id="dropdownLanguage" ngbDropdownToggle>
+            <i class="fa-solid fa-language me-2"></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownLanguage">
+            <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('en')">
+                <img alt="us-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/en_icon.png" style="width: 30px; height: 30px;" />
+                English
+            </button>
+            <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('ja')">
+                <img alt="japan-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/ja_icon.png" style="width: 30px; height: 30px;" />
+                日本語
+            </button>
+        </div>
+    </div>
+</nav>
