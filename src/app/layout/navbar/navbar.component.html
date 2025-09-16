@@ -1,7 +1,8 @@
 <ng-template #drawer let-offcanvas>
     <div class="offcanvas-header">
         <div class="offcanvas-title">
-            <img alt="chat logo" class="object-fit-cover" src="/assets/logo/chat_app_logo.png" height="75px" width="150px" />
+            <img alt="chat logo" class="object-fit-cover" src="/assets/logo/chat_app_logo.png" height="75px"
+                width="150px" />
         </div>
         <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss()"></button>
     </div>
@@ -9,8 +10,6 @@
         <div class="">
             <button class="d-block btn btn-outline-light my-2 text-dark"
                 (click)="navigateAndClose(offcanvas, userLink)">Manage Users</button>
-            <button class="d-block btn btn-outline-light my-2 text-dark"
-                (click)="navigateAndClose(offcanvas, productLink)">Manage Products</button>
         </div>
     </div>
 </ng-template>
@@ -27,11 +26,13 @@
             <button ngbDropdownItem (click)="onLogout()">Logout</button>
             <hr />
             <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('en')">
-                <img alt="use-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/en_icon.png" style="width: 30px; height: 30px;" />
+                <img alt="use-logo-icon" class="rounded-pill border border-secondary me-2"
+                    src="/assets/logo/en_icon.png" style="width: 30px; height: 30px;" />
                 English
             </button>
             <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('ja')">
-                <img alt="use-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/ja_icon.png" style="width: 30px; height: 30px;" />
+                <img alt="use-logo-icon" class="rounded-pill border border-secondary me-2"
+                    src="/assets/logo/ja_icon.png" style="width: 30px; height: 30px;" />
                 日本語
             </button>
         </div>
@@ -45,11 +46,13 @@
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownLanguage">
             <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('en')">
-                <img alt="us-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/en_icon.png" style="width: 30px; height: 30px;" />
+                <img alt="us-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/en_icon.png"
+                    style="width: 30px; height: 30px;" />
                 English
             </button>
             <button class="d-flex flex-row align-items-center" ngbDropdownItem (click)="changeLanguage('ja')">
-                <img alt="japan-logo-icon" class="rounded-pill border border-secondary me-2" src="/assets/logo/ja_icon.png" style="width: 30px; height: 30px;" />
+                <img alt="japan-logo-icon" class="rounded-pill border border-secondary me-2"
+                    src="/assets/logo/ja_icon.png" style="width: 30px; height: 30px;" />
                 日本語
             </button>
         </div>

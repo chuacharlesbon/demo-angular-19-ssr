@@ -1,1 +1,36 @@
-<p>homepage works!</p>
+<div class="p-4 row justify-content-center align-items-start h-100 m-0">
+    <div class="col col-12 col-md-6 col-lg-4 d-flex flex-column h-100">
+
+        <!-- Header -->
+        <img alt="chat logo" class="object-fit-cover d-block mx-auto" src="/assets/logo/chat_app_logo.png" height="75px"
+            width="150px" />
+        <h2 class="text-info">Messages</h2>
+
+        <!-- Loading -->
+        <div *ngIf="loading | async" class="py-5 flex-grow-1 d-flex justify-content-center align-items-center">
+            <p class="text-center">
+                Loading users ...
+                <i class="animate-spin fa-solid fa-spinner ms-4"></i>
+            </p>
+        </div>
+
+        <!-- When not loading -->
+        <ng-container *ngIf="!(loading | async)">
+            <ng-container *ngIf="(displayedUsers | async) as list">
+
+                <!-- No user -->
+                <div *ngIf="list.length === 0"
+                    class="py-5 flex-grow-1 d-flex justify-content-center align-items-center">
+                    <p class="">No users found.</p>
+                </div>
+
+                <!-- Show user -->
+                <div *ngIf="list.length !== 0" class="flex-grow-1 overflow-auto">
+                    <div *ngFor="let user of list">
+                        <app-usercard [userData]="user"></app-usercard>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

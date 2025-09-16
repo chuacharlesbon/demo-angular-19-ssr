@@ -2,6 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root', // singleton for the entire app
@@ -14,7 +15,7 @@ export class SocketService {
     this.isBrowser = isPlatformBrowser(platformId);
 
     if (this.isBrowser) {
-      this.socket = io('http://localhost:4000', {
+      this.socket = io(environment.API_URL, {
         transports: ['websocket'],
         autoConnect: true,
         path: '/socket-route'

@@ -4,7 +4,11 @@
 //
 //   const user = Convert.toUser(json);
 
-export interface Users {
+export interface UserList {
+    data?:    User[];
+    message?: string;
+}
+export interface UserModel {
     data?:    User;
     message?: string;
 }
@@ -22,11 +26,11 @@ export interface User {
 
 // Converts JSON strings to/from your types
 export class Convert {
-    public static toUser(json: string): Users {
+    public static toUser(json: string): UserModel {
         return JSON.parse(json);
     }
 
-    public static userToJson(value: Users): string {
+    public static userToJson(value: UserModel): string {
         return JSON.stringify(value);
     }
 }

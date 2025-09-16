@@ -1,0 +1,57 @@
+<div class="p-4 row justify-content-center align-items-start h-100 m-0">
+    <div class="col col-12 col-md-6 col-lg-4 d-flex flex-column h-100">
+
+        <!-- Header -->
+        <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+            <button (click)="goBack()">
+                <i class="fa-solid fa-arrow-left text-dark fw-bold"></i>
+            </button>
+            <button (click)="getChats()">
+                <i class="fa-solid fa-arrow-rotate-right"></i>
+            </button>
+        </div>
+
+        <p class="fw-bold">Chat with {{ userId }}</p>
+
+        <!-- Loading -->
+        <div *ngIf="loading | async" class="py-5 flex-grow-1 d-flex justify-content-center align-items-center">
+            <p>
+                Loading thread ...
+                <i class="animate-spin fa-solid fa-spinner ms-4"></i>
+            </p>
+        </div>
+
+        <!-- Chat list -->
+        <ng-container *ngIf="!(loading | async)">
+            <ng-container *ngIf="(displayedChats | async) as list">
+
+                <!-- Empty -->
+                <div *ngIf="list.length === 0"
+                    class="py-5 flex-grow-1 d-flex justify-content-center align-items-center">
+                    <p>No thread found.</p>
+                </div>
+
+                <!-- Chat messages -->
+                <div *ngIf="list.length !== 0" class="flex-grow-1 overflow-auto">
+                    <div *ngFor="let chat of list">
+                        <app-chatcard [chatData]="chat"></app-chatcard>
+                    </div>
+                </div>
+
+            </ng-container>
+        </ng-container>
+
+        <!-- Input form -->
+        <form #form="ngForm"
+            class="d-flex flex-row justify-content-between align-items-start border-top border-secondary pt-2 pb-5"
+            (ngSubmit)="onSubmit()">
+            <textarea name="message" class="form-control me-2" placeholder="Message" [(ngModel)]="message" required
+                #messageCtrl="ngModel" rows="2"></textarea>
+
+            <button type="submit">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+
+    </div>
+</div>

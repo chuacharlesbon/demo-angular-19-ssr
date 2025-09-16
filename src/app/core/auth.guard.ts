@@ -1,14 +1,13 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { inject, PLATFORM_ID } from '@angular/core';
+import { Router, CanActivateFn } from '@angular/router';
 import { getCookie } from '../utils/cookie';
 import { routeNames } from '../app.routes';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  // return true;
-
   const router = inject(Router);
+  const platformId = inject(PLATFORM_ID);
 
-  const hasToken = getCookie('user-session');
+  const hasToken = getCookie('user-session', platformId);
   console.log("Token", hasToken);
 
   if (hasToken) {

@@ -1,0 +1,9 @@
+<a class="p-2 my-2 border border-secondary rounded d-flex flex-row justify-content-between align-items-center text-decoration-none"
+    [routerLink]="[threadsLink, userData.email]">
+    <img class=" rounded-pill img-fluid object-fit-cover" [src]="userData.email ?? 'N/A'"
+        style="background-color: grey; height: 50px; width: 50px;" />
+    <div class="w-100 px-2">
+        <p class="my-0 text-dark">{{ userData.fullName }}</p>
+        <p class="my-1 text-secondary" style="font-size: 12px;">{{ userData.email }}</p>
+    </div>
+</a>

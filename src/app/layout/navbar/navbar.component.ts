@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbDropdownModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  private platformId: Object = inject(PLATFORM_ID);
   // Language
   private translate = inject(TranslateService);
   changeLanguage(lang: string) {
@@ -92,9 +93,9 @@ export class NavbarComponent {
       this.profileData = data;
     });
     this.statusSub = this.status.subscribe((data) => {
-      const hasToken = getCookie('user-session');
+      const hasToken = getCookie('user-session', this.platformId);
       if (data === Status.Initial && hasToken) {
-        // this.profileStore.getProfile();
+        this.profileStore.getProfile();
       }
     });
     this.translate.onLangChange.subscribe((event) => {
