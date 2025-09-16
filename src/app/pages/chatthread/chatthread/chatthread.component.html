@@ -36,6 +36,8 @@
                     <div *ngFor="let chat of list">
                         <app-chatcard [chatData]="chat"></app-chatcard>
                     </div>
+                    <p #threadBottom id="thread-bottom" class="text-secondary text-center my-4"
+                        style="font-size: 10px;">Latest</p>
                 </div>
 
             </ng-container>
@@ -43,7 +45,7 @@
 
         <!-- Input form -->
         <form #form="ngForm"
-            class="d-flex flex-row justify-content-between align-items-start border-top border-secondary pt-2 pb-5"
+            class="d-flex flex-row justify-content-between align-items-start border-top border-secondary pt-2 pb-4"
             (ngSubmit)="onSubmit()">
             <textarea name="message" class="form-control me-2" placeholder="Message" [(ngModel)]="message" required
                 #messageCtrl="ngModel" rows="2"></textarea>

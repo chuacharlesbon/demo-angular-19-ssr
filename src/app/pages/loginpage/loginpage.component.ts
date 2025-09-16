@@ -61,12 +61,6 @@ export class LoginpageComponent {
     //   const title = this.translate.instant('LOGIN');
     //   this.textLogin = title;
     // });
-
-    // Subscribe to socket messages from server
-    this.socketSub = this.socketService.listen<string>('message').subscribe(msg => {
-      // handle message
-      console.log('This is the message',msg);
-    });
   }
 
   ngOnDestroy() {
@@ -84,6 +78,9 @@ export class LoginpageComponent {
     this.loading = false;
 
     if (result.success) {
+      // Register current user
+      this.socketService.register(result?.data?.data?.email);
+
       this.profileStore.setProfile(result?.data?.data);
       this.router.navigate([routeNames.home.path]);
     }

@@ -44,6 +44,20 @@ export class SocketService {
     });
   }
 
+  register(userId: string) {
+    this.socket?.emit('register', userId);
+  }
+
+  sendPrivateMessage(senderId: string, recipientId: string, message: string) {
+    this.socket?.emit('private-message', { senderId, recipientId, message });
+  }
+
+  onPrivateMessage(): Observable<{ senderId: string; recipientId: string, message: string }> {
+    return new Observable(sub => {
+      this.socket?.on('private-message', (data) => sub.next(data));
+    });
+  }
+
   // Disconnect socket (optional)
   disconnect() {
     if(this.socket !== null) {

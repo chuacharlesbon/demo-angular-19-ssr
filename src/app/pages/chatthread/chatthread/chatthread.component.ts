@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatStore } from '../../../stores/chatStore';
 import { combineLatest, map, Subscription } from 'rxjs';
@@ -7,6 +7,7 @@ import { ChatcardComponent } from '../../../component/chatcard/chatcard/chatcard
 import { FormsModule } from '@angular/forms';
 import { ProfileStore } from '../../../stores/profileStore';
 import { User } from '../../../core/interfaces/user';
+import { SocketService } from '../../../services/socket/socket.service';
 
 @Component({
   selector: 'app-chatthread',
@@ -18,6 +19,9 @@ export class ChatthreadComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   location: Location = inject(Location);
 
+  // Socket
+  private socketService = inject(SocketService);
+
   // Profile
   profileStore = inject(ProfileStore);
   profile = this.profileStore.profile$;
@@ -25,6 +29,9 @@ export class ChatthreadComponent {
   profileData: User = {};
 
   // Chats
+  @ViewChild('threadBottom') threadBottom?: ElementRef;
+  private chatsSub = Subscription.EMPTY;
+
   chatStore = inject(ChatStore);
   chatsList = this.chatStore.chats$;
   searchResultList = this.chatStore.searchResult$;
@@ -40,6 +47,7 @@ export class ChatthreadComponent {
     map(([chats, searchResults]) => {
       const safeChats = Array.isArray(chats) ? chats : [];
       const safeSearch = Array.isArray(searchResults) ? searchResults : [];
+      this.scrollToBottom();
       return safeSearch.length > 0 ? safeSearch : safeChats;
     })
   );
@@ -52,8 +60,16 @@ export class ChatthreadComponent {
     });
   }
 
+  ngAfterViewInit() {
+    // Subscribe once to chat updates
+    this.chatsSub = this.displayedChats.subscribe(() => {
+      this.scrollToBottom();
+    });
+  }
+
   ngOnDestroy() {
     this.profileSub.unsubscribe(); // Prevent memory leaks
+    this.chatsSub.unsubscribe(); // Prevent memory leaks
   }
 
   getChats() {
@@ -64,11 +80,24 @@ export class ChatthreadComponent {
     this.location.back();
   }
 
+  scrollToBottom() {
+    if (this.threadBottom) {
+      this.threadBottom.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   async onSubmit() {
-    const result = await this.chatStore.sendMsg(
+    await this.chatStore.sendMsg(
       this.message,
       this.profileData.email ?? "_system",
       this.userId,
+    );
+
+    // Trigger socket
+    this.socketService.sendPrivateMessage(
+      this.profileData.email ?? "_system",
+      this.userId,
+      this.message
     );
   }
 }

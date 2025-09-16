@@ -9,6 +9,8 @@ import { ProfileStore } from '../../stores/profileStore';
 import { getCookie } from '../../utils/cookie';
 import { Status } from '../../utils/enums';
 import { CommonModule } from '@angular/common';
+import { SocketService } from '../../services/socket/socket.service';
+import { ChatStore } from '../../stores/chatStore';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +20,14 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent {
   private platformId: Object = inject(PLATFORM_ID);
+
+  // Socket
+  private socketService = inject(SocketService);
+  private socketSub: Subscription = new Subscription();
+
+  // Chats
+  chatStore = inject(ChatStore);
+
   // Language
   private translate = inject(TranslateService);
   changeLanguage(lang: string) {
@@ -91,6 +101,9 @@ export class NavbarComponent {
     this.trackNavigation();
     this.profileSub = this.profile.subscribe((data) => {
       this.profileData = data;
+
+      // Register current user
+      this.socketService.register(data?.email ?? "N/A");
     });
     this.statusSub = this.status.subscribe((data) => {
       const hasToken = getCookie('user-session', this.platformId);
@@ -101,10 +114,17 @@ export class NavbarComponent {
     this.translate.onLangChange.subscribe((event) => {
       console.log('Language changed to:', event.lang);
     });
+
+    // Listen for messages
+    this.socketSub = this.socketService.onPrivateMessage().subscribe(msg => {
+      console.log("This is the socket message", msg);
+      this.chatStore.getAllChats(msg.senderId);
+    });
   }
 
   ngOnDestroy() {
     this.profileSub.unsubscribe(); // Prevent memory leaks
     this.statusSub.unsubscribe(); // Prevent memory leaks
+    this.socketSub.unsubscribe(); // Prevent memory leaks
   }
 }
