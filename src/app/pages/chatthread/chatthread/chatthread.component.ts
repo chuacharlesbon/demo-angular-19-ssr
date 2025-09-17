@@ -63,7 +63,7 @@ export class ChatthreadComponent {
   ngAfterViewInit() {
     // Subscribe once to chat updates
     this.chatsSub = this.displayedChats.subscribe(() => {
-      this.scrollToBottom();
+      setTimeout(() => this.scrollToBottom(), 750);
     });
   }
 
@@ -87,17 +87,21 @@ export class ChatthreadComponent {
   }
 
   async onSubmit() {
-    await this.chatStore.sendMsg(
+    const data = await this.chatStore.sendMsg(
       this.message,
       this.profileData.email ?? "_system",
       this.userId,
     );
 
-    // Trigger socket
-    this.socketService.sendPrivateMessage(
-      this.profileData.email ?? "_system",
-      this.userId,
-      this.message
-    );
+    if (data.message) {
+      // Trigger socket
+      this.socketService.sendPrivateMessage(
+        this.profileData.email ?? "_system",
+        this.userId,
+        this.message
+      );
+
+      this.message = "";
+    }
   }
 }

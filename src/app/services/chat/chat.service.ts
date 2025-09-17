@@ -57,4 +57,20 @@ export class ChatService {
       return {};
     }
   }
+
+  async getLatestChat(id: string): Promise<Chat> {
+    try {
+      const res = this.http.get<AddChatModel>(
+        `${this.url}/chat-thread/chats/latest/${id}`,
+        {
+          withCredentials: true
+        }
+      );
+      const result = await firstValueFrom(res);
+      return result.data ?? {};
+    } catch (error) {
+      console.log("Get chat error", error);
+      return {};
+    }
+  }
 }

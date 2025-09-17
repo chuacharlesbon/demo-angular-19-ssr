@@ -118,7 +118,7 @@ export class NavbarComponent {
     // Listen for messages
     this.socketSub = this.socketService.onPrivateMessage().subscribe(msg => {
       console.log("This is the socket message", msg);
-      this.chatStore.getAllChats(msg.senderId);
+      this.chatStore.getLatestChat(msg.senderId);
     });
   }
 

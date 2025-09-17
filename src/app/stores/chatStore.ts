@@ -20,8 +20,12 @@ export class ChatStore {
         this.loadingSubject.next(true);
         const result: Chat[] = await this.chatService.getAllChats(id);
         this.chatSubject.next(result);
-        this.searchResultSubject.next(result);
         this.loadingSubject.next(false);
+    }
+
+    async getLatestChat(id: string) {
+        const result: Chat = await this.chatService.getLatestChat(id);
+        this.chatSubject.next([...this.chatSubject.value, result]);
     }
 
     clearSearches() {
@@ -40,9 +44,9 @@ export class ChatStore {
         return this.loadingSubject.getValue();
     }
 
-    async sendMsg(msg: string, sender: string, receiver: string) {
-        this.loadingSubject.next(true);
-        await this.chatService.sendMsg(msg, sender, receiver);
-        this.getAllChats(receiver);
+    async sendMsg(msg: string, sender: string, receiver: string): Promise<Chat> {
+        const data = await this.chatService.sendMsg(msg, sender, receiver);
+        this.getLatestChat(receiver);
+        return data;
     }
 }
