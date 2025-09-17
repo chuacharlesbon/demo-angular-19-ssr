@@ -68,4 +68,21 @@ export class UserService {
       return this.defaultUsersData.data ?? {};
     }
   }
+
+  async logout(): Promise<Map<string, string> | null> {
+    try {
+      const res = this.http.patch<Map<string, string>>(
+        `${this.url}/chat/logout`,
+        {},
+        {
+          withCredentials: true
+        }
+      );
+      const result = await firstValueFrom(res);
+      return result;
+    } catch (error) {
+      console.log("Get users error", error);
+      return null;
+    }
+  }
 }

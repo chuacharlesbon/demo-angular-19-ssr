@@ -29,6 +29,7 @@ export class ProfileStore {
 
     clearProfile() {
         this.profileSubject.next({});
+        this.usersService.logout();
     }
 
     getProfileSnapshot() {

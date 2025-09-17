@@ -83,8 +83,7 @@ export class NavbarComponent {
   }
 
   onLogout() {
-    const emptyUser: User = {};
-    this.profileStore.setProfile(emptyUser);
+    this.profileStore.clearProfile();
     this.router.navigate([routeNames.login.path]);
   }
 
